@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.Receiver.AlarmReceiver;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments.Alarm;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetNextAlarmTask;
 
 /**
@@ -38,6 +39,7 @@ public class AlarmNotification extends ActionBarActivity{
                 Intent alarmIntent = new Intent(v.getContext(), AlarmReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(v.getContext(), 0, alarmIntent, 0);
                 manager.cancel(pendingIntent);
+                //find the next alarm
                 Object[] parameters = { v.getContext() };
                 new GetNextAlarmTask().execute(parameters);
                 finish();
@@ -53,8 +55,10 @@ public class AlarmNotification extends ActionBarActivity{
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         manager.cancel(pendingIntent);
+        //find the next alarm
         Object[] parameters = { this };
         new GetNextAlarmTask().execute(parameters);
+        finish();
     }
 
 }

@@ -1,7 +1,6 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities.AlarmNotification;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 
 /**
  * Created by Calvin on 4/19/2015.
@@ -37,8 +35,8 @@ public class AlarmItemAdapter extends ArrayAdapter<AlarmItem>{
         TextView nameText = (TextView) view.findViewById(R.id.name);
         nameText.setText(alarmItems.get(position).toString(alarmItems.get(position).getHour(), alarmItems.get(position).getMinute(), view.getContext()));
 
-        Switch groupSwitch = (Switch) view.findViewById(R.id.alarm_switch);
-        groupSwitch.setChecked(true);
+        //Switch groupSwitch = (Switch) view.findViewById(R.id.alarm_switch);
+        //groupSwitch.setChecked(true);
 
         return view;
     }

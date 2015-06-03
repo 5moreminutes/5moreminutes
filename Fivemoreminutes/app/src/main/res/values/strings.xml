@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">5 more Minutes!</string>
+    <string name="app_name">5 More Minutes!</string>
     <string name = "group">Group</string>
     <string name="action_settings">Settings</string>
     <string name="alarm">Alarm1</string>

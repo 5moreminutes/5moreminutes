@@ -85,7 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
         AlarmItem alarm = null;
         int counter = 0;
         Calendar currentTime = Calendar.getInstance();
-        //currentTime.add(Calendar.MINUTE, 1);
+        currentTime.add(Calendar.MINUTE, 1);
         if(cursor.moveToFirst()) {
             do {
                 AlarmItem temp = new AlarmItem();
@@ -96,15 +96,15 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(getGroupById(temp.getGroupKey()).getCurrentlyOn() == false) {
                     continue;
                 }
+                if(currentTime.get(currentTime.HOUR_OF_DAY) > temp.getHour()) {
+                    continue;
+                } else if(currentTime.get(currentTime.HOUR_OF_DAY) == temp.getHour() && currentTime.get(currentTime.MINUTE) > temp.getMinute()) {
+                    continue;
+                }
                 if(counter == 0) {
                     alarm = temp;
                     counter++;
                 } else {
-                    if(currentTime.get(currentTime.HOUR_OF_DAY) > temp.getHour()) {
-                        continue;
-                    } else if(currentTime.get(currentTime.HOUR_OF_DAY) == temp.getHour() && currentTime.get(currentTime.MINUTE) > temp.getMinute()) {
-                        continue;
-                    }
                     int hoursDiffBetweenNowAndTemp = Math.abs(currentTime.get(currentTime.HOUR_OF_DAY) - temp.getHour());
                     int minutesDiffBetweenNowAndTemp = Math.abs(currentTime.get(currentTime.MINUTE) - temp.getMinute());
                     int hoursDiffBetweenNowAndCurrent = Math.abs(currentTime.get(currentTime.HOUR_OF_DAY) - alarm.getHour());
@@ -117,6 +117,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
         }
+        db.close();
         return alarm;
     }
 
@@ -136,7 +137,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 groupAlarms.add(alarm);
             } while(cursor.moveToNext());
         }
-
+        db.close();
         return groupAlarms;
     }
 
@@ -166,6 +167,7 @@ public class DBHandler extends SQLiteOpenHelper {
             boolean bool = (cursor.getInt(2) == 1)? true : false;
             group.setCurrentlyOn(bool);
         }
+        db.close();
         return group;
     }
 
@@ -188,6 +190,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 allGroups.add(group);
             } while(cursor.moveToNext());
         }
+        db.close();
         return allGroups;
     }
 
@@ -225,6 +228,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("SQLException", e.toString());
         }
+        db.close();
         return rowsUpdated;
     }
 
@@ -238,6 +242,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("SQLException", e.toString());
         }
+        db.close();
         return rowsUpdated;
     }
 

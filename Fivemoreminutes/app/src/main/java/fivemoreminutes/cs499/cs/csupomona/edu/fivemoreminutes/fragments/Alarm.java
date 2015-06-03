@@ -1,12 +1,9 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
-import android.app.AlarmManager;
+import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +15,10 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.Receiver.AlarmReceiver;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.AlarmItemAdapter;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.AddGroupAlarm;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupAlarms;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupsTask;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetNextAlarmTask;
 
 /**
@@ -49,15 +44,19 @@ public class Alarm extends Fragment {
         AlarmItem toAdd = new AlarmItem(hourOfDay, minute, this.groupID);
         alarmItems.add(toAdd);
         listAdapter.notifyDataSetChanged();
-        //fire async method to register this alarm with AlarmManager
-        Object[] parameters = { this };
-        new GetNextAlarmTask().execute(parameters);
-        Toast.makeText(getActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
         //fire async method for adding AlarmItem to group_alarm table
         if(this.getTag().equals("android:switcher:2131427398:0")) {
             Object[] params = { getActivity(), toAdd.getHour(), toAdd.getMinute(), toAdd.getGroupKey() };
             new AddGroupAlarm().execute(params);
         }
+        //fire async method to register this alarm with AlarmManager
+        findNextAlarm();
+        Toast.makeText(getActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
+    }
+
+    public void findNextAlarm(){
+        Object[] parameters = { this.getActivity() };
+        new GetNextAlarmTask().execute(parameters);
     }
 
     public void setAlarmItems(ArrayList<AlarmItem> alarmItems) {

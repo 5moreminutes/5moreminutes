@@ -3,11 +3,7 @@ package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model;
 import android.app.Activity;
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
-
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.AlarmItemAdapter;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 
 /**
  * Created by Kyle-PC on 5/17/2015.

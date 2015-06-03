@@ -2,20 +2,19 @@ package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities.DrillDownAlarmActivity;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetNextAlarmTask;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.SetGroupStateTask;
 
 /**
@@ -55,6 +54,7 @@ public class GroupItemAdapter extends ArrayAdapter<GroupItem>{
             public void onClick(View view) {
                 boolean state = ((Switch) view).isChecked();
                 int groupID = groupItems.get(position).get_id();
+                groupItems.get(position).setCurrentlyOn(state);
                 Object[] params = {context, groupID, state};
                 new SetGroupStateTask().execute(params);
             }

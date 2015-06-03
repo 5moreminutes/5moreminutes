@@ -3,8 +3,6 @@ package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
-import android.view.View;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments.Alarm;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments.Group;
@@ -13,7 +11,7 @@ import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments.Group;
  * Created by Calvin on 4/11/2015.
  */
 public class PagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 2;
+    final int PAGE_COUNT = 1;
     private String tabTitles[] = new String[] { "Groups", "Quick Alarms"};
 
     public PagerAdapter(FragmentManager fm) {
@@ -30,8 +28,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch(position){
             case 0:
                 return new Group();
-            case 1:
-                return new Alarm();
+//            case 1:
+//                return new Alarm();
+// When adding QuickAlarms back remember to change the page count to 2.
         }
         return null;
     }
