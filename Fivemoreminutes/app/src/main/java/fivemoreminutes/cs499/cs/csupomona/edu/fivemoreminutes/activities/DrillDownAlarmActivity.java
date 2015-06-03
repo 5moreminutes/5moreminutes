@@ -3,21 +3,14 @@ package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.AlarmItemAdapter;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.DrillDownAlarmAdapter;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.PagerAdapter;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 
 /**
  * Created by Calvin on 4/29/2015.
@@ -39,6 +32,7 @@ public class DrillDownAlarmActivity extends ActionBarActivity {
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabsStrip.setTextColor(Color.parseColor("#FFFFFF"));
+        tabsStrip.setIndicatorColor(getResources().getColor(R.color.tab_background));
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 

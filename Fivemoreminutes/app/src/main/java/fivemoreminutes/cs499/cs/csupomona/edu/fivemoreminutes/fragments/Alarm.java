@@ -1,12 +1,14 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -17,7 +19,7 @@ import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.AlarmItem
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.AddGroupAlarm;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupAlarms;
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupsTask;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetNextAlarmTask;
 
 /**
  * Created by Calvin on 4/11/2015.
@@ -29,7 +31,7 @@ public class Alarm extends Fragment {
     private AlarmItemAdapter listAdapter;
     private TimePickDialog tpd;
     private int groupID;
-
+    private PendingIntent pendingIntent;
 
     public static Alarm newInstance(int page) {
         Bundle args = new Bundle();
@@ -43,10 +45,18 @@ public class Alarm extends Fragment {
         alarmItems.add(toAdd);
         listAdapter.notifyDataSetChanged();
         //fire async method for adding AlarmItem to group_alarm table
-        if(this.getTag().equals("android:switcher:2131361862:0")) {
+        if(this.getTag().equals("android:switcher:2131427398:0")) {
             Object[] params = { getActivity(), toAdd.getHour(), toAdd.getMinute(), toAdd.getGroupKey() };
             new AddGroupAlarm().execute(params);
         }
+        //fire async method to register this alarm with AlarmManager
+        findNextAlarm();
+        Toast.makeText(getActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
+    }
+
+    public void findNextAlarm(){
+        Object[] parameters = { this.getActivity() };
+        new GetNextAlarmTask().execute(parameters);
     }
 
     public void setAlarmItems(ArrayList<AlarmItem> alarmItems) {
@@ -61,11 +71,10 @@ public class Alarm extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.alarm_fragment, container, false);
-        if(this.getTag().equals("android:switcher:2131361862:0")) {
+        if(this.getTag().equals("android:switcher:2131427398:0")) {
             int groupID = getArguments().getInt("GROUP_ID");
             this.groupID = groupID;
         }
-
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.alarm_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +90,7 @@ public class Alarm extends Fragment {
         listAdapter = new AlarmItemAdapter(this.getActivity(), alarmItems);
         listView.setAdapter(listAdapter);
 
-        if(this.getTag().equals("android:switcher:2131361862:0")) {
+        if(this.getTag().equals("android:switcher:2131427398:0")) {
             Object[] params = { getActivity(), alarmItems, listAdapter, this.groupID };
             new GetGroupAlarms().execute(params);
         }

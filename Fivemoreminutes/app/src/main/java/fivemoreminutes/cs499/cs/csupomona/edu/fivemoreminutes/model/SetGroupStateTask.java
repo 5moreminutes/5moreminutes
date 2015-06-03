@@ -1,11 +1,13 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
-
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.GroupItemAdapter;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.Receiver.AlarmReceiver;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 
 /**
@@ -25,6 +27,13 @@ public class SetGroupStateTask extends AsyncTask {
         } else {
             dbHandler.setGroupToOff(groupID);
         }
+        Activity thisContext = ((Activity)objects[0]);
+        Intent alarmIntent = new Intent(thisContext, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(thisContext, 0, alarmIntent, 0);
+        AlarmManager manager = (AlarmManager) thisContext.getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pendingIntent);
+        Object[] parameters = { objects[0] };
+        new GetNextAlarmTask().execute(parameters);
         // Don't ever think that this GroupItem does anything, it doesn't
         return new GroupItem();
     }

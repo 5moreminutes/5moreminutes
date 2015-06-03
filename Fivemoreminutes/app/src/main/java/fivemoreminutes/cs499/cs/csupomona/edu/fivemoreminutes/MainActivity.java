@@ -1,9 +1,9 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabsStrip.setTextColor(Color.parseColor("#FFFFFF"));
+        tabsStrip.setIndicatorColor(getResources().getColor(R.color.tab_background));
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
     }

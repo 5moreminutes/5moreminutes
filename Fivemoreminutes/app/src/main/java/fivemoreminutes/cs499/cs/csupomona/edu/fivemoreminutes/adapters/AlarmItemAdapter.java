@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 
 /**
  * Created by Calvin on 4/19/2015.
@@ -33,9 +33,10 @@ public class AlarmItemAdapter extends ArrayAdapter<AlarmItem>{
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.alarm_item, parent, false);
         TextView nameText = (TextView) view.findViewById(R.id.name);
-        nameText.setText(alarmItems.get(position).getHour() + ":" + alarmItems.get(position).getMinute());
-        Switch groupSwitch = (Switch) view.findViewById(R.id.alarm_switch);
-        groupSwitch.setChecked(true);
+        nameText.setText(alarmItems.get(position).toString(alarmItems.get(position).getHour(), alarmItems.get(position).getMinute(), view.getContext()));
+
+        //Switch groupSwitch = (Switch) view.findViewById(R.id.alarm_switch);
+        //groupSwitch.setChecked(true);
 
         return view;
     }

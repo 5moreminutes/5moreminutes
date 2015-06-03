@@ -1,5 +1,8 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data;
 
+import android.content.Context;
+import android.text.format.DateFormat;
+
 /**
  * Created by Calvin on 4/23/2015.
  */
@@ -34,7 +37,7 @@ public class AlarmItem {
         this.hour = hour;
     }
 
-    public AlarmItem(int hour, int minute, int groupKey){
+    public AlarmItem(int hour, int minute, int groupKey) {
         this.hour = hour;
         this.minute = minute;
         this.groupKey = groupKey;
@@ -51,5 +54,36 @@ public class AlarmItem {
 
     public void set_id(int _id) {
         this._id = _id;
+    }
+
+    public String toString(int hourOfDay, int minute, Context context) {
+        String hour;
+        String min;
+        String amOrPm;
+
+        if (minute < 10) {
+            min = "0" + Integer.toString(minute);
+        } else {
+            min = Integer.toString(minute);
+        }
+
+        if (!DateFormat.is24HourFormat(context)) {
+            if (hourOfDay > 12) {
+                hour = Integer.toString(hourOfDay - 12);
+                amOrPm = "PM";
+            } else if (hourOfDay == 0) {
+                hour = Integer.toString(12);
+                amOrPm = "AM";
+            } else {
+                hour = Integer.toString(hourOfDay);
+                amOrPm = "AM";
+            }
+
+
+        } else {
+            hour = Integer.toString(hourOfDay);
+            amOrPm = "";
+        }
+        return hour + ":" + min + " " + amOrPm;
     }
 }
